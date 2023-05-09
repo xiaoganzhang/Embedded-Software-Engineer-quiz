@@ -1,0 +1,116 @@
+Answer for Q2
+
+Question:
+
+Q2) Below is a link to a spreadsheet with two columns A and B such that:
+A is the input
+B is the output
+
+Based on the spreadsheet, there exist a function such as  f that relates A to B which is:
+
+Bi = f(Ai)
+Where i is the row number of the spreadsheet.
+For example:
+	
+For row i = 1: 				 f(15840) = cGp
+For row i = 2:				f(16465) = cmW
+For row i = 3:				f(17941) = cX3
+
+Embedded Software Engineer Quiz Resource
+
+
+Q2 a) First task is to find function f(Ai) using these sets of points in the spreadsheet.
+
+Q2 b) Once the f(Ai) is found, what would be the output for the following inputs?
+f(30001) = ?
+f(55555) = ?
+f(77788) = ?
+
+Q2 c) What is the upper limit or maximum range of this function before there will be collisions or overflow? 
+
+Q2 d) The first three parts are mostly mathematical and once you find the solution, you realize you need your programming skills to solve these questions completely. Therefore, please share any code that you write in the process of solving the above problems.
+
+Hint 1: One must have a good idea about the domain and the range of the function f.
+Hint 2: There are patterns within the spreadsheet that can help you find the function f.
+
+
+
+
+My answer:
+
+
+After carefully reading this question and the spreadsheet dataset, it appears that the function f(Ai) is a conversion of a numberical value into a 3 character code.
+And Function f(Ai) is some form of encoding or hashing algorithm that maps input 5_digit numbers (Ai) to 3_character strings (Bi).
+I tried popular Encryption Algorithms like MD5, SHA1 and DES but they could not match the input or output. I also tried to convert Row A and Row B into binary, hex, but still can not find the relation between.
+So I think the function is using an original hash algorithms.
+The conversion could be using ASCII values(A Caesar cipher) or could be using a custom character set to convert a given integer to a base_62 string.
+
+Solution 1:
+if base_62 string is used,
+function can be defined as (written in python )
+
+def int_to_base62(num):
+    base62_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" // notice that the order of this base is unsure. 
+    result = ""
+    while num:
+        num, remainder = divmod(num, 62)
+        result = base62_chars[remainder] + result
+    return result
+
+def f(Ai):
+    return int_to_base62(Ai)
+    
+The upper limit or maximum range of this function before collisions or overflow depends on the length of the output strings. 
+If we assume that the length of the output strings is fixed at 3 characters, the maximum range would be 62^3 = 238328. Beyond this range, there would be collisions or overflow.
+
+PS: The base62_chars will have different orders depending on the encrypt method. I could not find the right combination. 
+
+Solution 2:
+if ASCII code is used, I am thinking that converting strings in list B into decimal numbers. For example cGp = 99 71 112 by ASCII code. Then i could try to find the relationship between A and B.
+
+function can be defined as: 
+
+//Ai is the input
+def f(Ai): 
+    first_letter = chr(((Ai // X) % x1) + const)
+    second_letter = chr(((Ai // Y) % y1) + const)
+    third_letter = chr((Ai // Z ) % z1 + const)
+    
+     return first_letter + second_letter + third_letter
+
+Again, I have try to find specific parameters to convert number list A to string list B, but i still could not define the relationship between them. 
+For example, i = 3 and i =4, Row A = 17941 and 17942. By adding 1, the output change from cX3 to cXB.
+And for i = 28,29,30,31,32. Input is 
+40956
+40957
+40958
+40959
+40960
+And output is 
+AQ9
+AQs
+AQq
+AQL
+AQQ
+
+I could tell that for output the first letter, the second letter, and the third letter change depending on the digit value of the input, but no simple relationship is found. 
+SO I am guessing that problem is that the encoding scheme might be more complex than a simple deterministic function, 
+involving multiple transformations, or bitwise operations, which makes it difficult to reverse-engineer the function based solely on the given data points.
+
+After all, the question 1 was pretty ez to solve using C programming language. But I spent couple hours on question 2 trying to decipher the input and output from the Excel file but I could not find the clear Function.
+
+I love solving challenging problems and I appreciate you could provide me this chance to do those two questions and thank you for reading this far.
+
+I would love to hear your feedback as soon as possible and discuss my qualification for this job during next interview.
+
+And Hopefully, i really want to get the answer for question 2 as i surely spent some time on it but could not find the best solution. Even some more hint is appreciatiable!
+
+Best wishes,
+Shawn Zhang
+
+
+
+
+    
+    
+
